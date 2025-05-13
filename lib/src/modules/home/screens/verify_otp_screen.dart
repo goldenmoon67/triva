@@ -1,3 +1,4 @@
+import 'package:default_flutter_project/src/modules/home/screens/onboarding_screen.dart';
 import 'package:flutter/material.dart';
 
 class VerifyOtpScreen extends StatefulWidget {
@@ -180,7 +181,10 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
                             ),
                             side: const BorderSide(color: Colors.transparent),
                           ),
-                          onPressed: () {},
+                          onPressed: () {Navigator.push(
+  context,
+  MaterialPageRoute(builder: (context) =>  OnboardingScreen()),
+);},
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
