@@ -1,4 +1,4 @@
-import 'package:default_flutter_project/src/modules/home/screens/verify_otp_screen.dart';
+import 'package:triva/src/modules/home/screens/verify_otp_screen.dart';
 import 'package:flutter/material.dart';
 
 class RegisterScreen extends StatefulWidget {

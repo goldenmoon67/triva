@@ -1,6 +1,6 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:default_flutter_project/src/modules/home/screens/login_screen.dart';
-import 'package:default_flutter_project/src/modules/home/screens/register_screen.dart';
+import 'package:triva/src/modules/home/screens/login_screen.dart';
+import 'package:triva/src/modules/home/screens/register_screen.dart';
 import 'package:flutter/material.dart';
 
 @RoutePage()

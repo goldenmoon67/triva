@@ -1,7 +1,7 @@
 import 'dart:io';
-import 'package:default_flutter_project/src/data/errors/error_model.dart';
-import 'package:default_flutter_project/src/data/services/errors/api_error.dart';
-import 'package:default_flutter_project/src/utils/di/getit_register.dart';
+import 'package:triva/src/data/errors/error_model.dart';
+import 'package:triva/src/data/services/errors/api_error.dart';
+import 'package:triva/src/utils/di/getit_register.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:logger/logger.dart';

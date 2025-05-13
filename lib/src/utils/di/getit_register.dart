@@ -1,7 +1,7 @@
-import 'package:default_flutter_project/src/configs/flavors.dart';
-import 'package:default_flutter_project/src/logs/log_console.dart';
-import 'package:default_flutter_project/src/utils/navigation/app_router.dart';
-import 'package:default_flutter_project/src/utils/navigation/guards/auth_guard.dart';
+import 'package:triva/src/configs/flavors.dart';
+import 'package:triva/src/logs/log_console.dart';
+import 'package:triva/src/utils/navigation/app_router.dart';
+import 'package:triva/src/utils/navigation/guards/auth_guard.dart';
 // ignore: depend_on_referenced_packages
 import "package:get_it/get_it.dart";
 

@@ -1,4 +1,4 @@
-import 'package:default_flutter_project/src/data/errors/error_model.dart';
+import 'package:triva/src/data/errors/error_model.dart';
 import 'package:dio/dio.dart';
 
 class ApiErrorStatus {

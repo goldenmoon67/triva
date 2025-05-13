@@ -1,9 +1,9 @@
 import 'dart:io';
 
-import 'package:default_flutter_project/src/configs/flavors.dart';
-import 'package:default_flutter_project/src/data/services/interceptors/error_interceptor.dart';
-import 'package:default_flutter_project/src/data/services/transformers/flutter_transformer.dart';
-import 'package:default_flutter_project/src/utils/di/getit_register.dart';
+import 'package:triva/src/configs/flavors.dart';
+import 'package:triva/src/data/services/interceptors/error_interceptor.dart';
+import 'package:triva/src/data/services/transformers/flutter_transformer.dart';
+import 'package:triva/src/utils/di/getit_register.dart';
 import 'package:dio/dio.dart';
 import 'package:dio/io.dart';
 import 'package:flutter/foundation.dart';

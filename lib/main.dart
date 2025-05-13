@@ -1,6 +1,6 @@
-import 'package:default_flutter_project/src/configs/flavors.dart';
-import 'package:default_flutter_project/src/utils/di/getit_register.dart';
-import 'package:default_flutter_project/src/utils/navigation/app_router.dart';
+import 'package:triva/src/configs/flavors.dart';
+import 'package:triva/src/utils/di/getit_register.dart';
+import 'package:triva/src/utils/navigation/app_router.dart';
 import 'package:flutter/material.dart';
 import 'package:overlay_support/overlay_support.dart';
 

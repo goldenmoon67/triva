@@ -1,6 +1,6 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:default_flutter_project/src/modules/home/screens/home_screen.dart';
-import 'package:default_flutter_project/src/utils/navigation/guards/auth_guard.dart';
+import 'package:triva/src/modules/home/screens/home_screen.dart';
+import 'package:triva/src/utils/navigation/guards/auth_guard.dart';
 part 'app_router.gr.dart';
 
 @AutoRouterConfig(replaceInRouteName: 'Screen,Route')

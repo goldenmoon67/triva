@@ -1,5 +1,5 @@
-/* import 'package:default_flutter_project/src/data/services/secure/secure_storage_service.dart';
-import 'package:default_flutter_project/src/utils/di/getit_register.dart';
+/* import 'package:triva/src/data/services/secure/secure_storage_service.dart';
+import 'package:triva/src/utils/di/getit_register.dart';
 
 import 'oauth.dart';
 
