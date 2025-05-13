@@ -1,7 +1,6 @@
 import 'package:triva/src/configs/flavors.dart';
 import 'package:triva/src/logs/log_console.dart';
 import 'package:triva/src/utils/navigation/app_router.dart';
-import 'package:triva/src/utils/navigation/guards/auth_guard.dart';
 // ignore: depend_on_referenced_packages
 import "package:get_it/get_it.dart";
 
@@ -23,7 +22,7 @@ Future setupGetIt({bool testing = false}) async {
     output: LogConsole.wrap(),
   );
   getIt.registerSingleton<Logger>(logger);
-  getIt.registerSingleton(AppRouter(authGuard: AuthGuard()));
+  getIt.registerSingleton(AppRouter());
   getIt.registerSingleton(FlutterSecureStorage(
     iOptions: IOSOptions(
       groupId: F.appGroupName,

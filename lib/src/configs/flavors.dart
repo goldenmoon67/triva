@@ -13,6 +13,7 @@ class F {
         //return 'http://10.0.2.2:5200/';//android emulator
         return "http://10.0.2.2:8080/api/";
       case Flavor.prod:
+        return "https://triva.app/api/";
       default:
         return "http://10.0.2.2:8080/api/";
     }
@@ -23,6 +24,7 @@ class F {
       case Flavor.dev:
         return "ApiConsts.devAppGroupName";
       case Flavor.prod:
+      
       default:
         return "ApiConsts.prodAppGroupName";
     }

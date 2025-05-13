@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:auto_route/auto_route.dart';
 
+@RoutePage()
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
 
@@ -202,35 +204,33 @@ class _OnboardingCard extends StatelessWidget {
             const SizedBox(height: 200),
 
             if(card.showButton)
-             Positioned(
-            
-              left: 0,
-              right: 0,
-              child: Center(
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF004BFE),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
+              Padding(
+                padding: const EdgeInsets.only(top: 24),
+                child: Center(
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xFF004BFE),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      elevation: 0,
+                      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 10),
                     ),
-                    elevation: 0,
-                    padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 10),
-                  ),
-                  onPressed: () {
-                    // Başla butonuna tıklanınca yapılacaklar
-                  },
-                  child: const Text(
-                    'Hadi Başlayalım!',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontFamily: 'Nunito Sans',
-                      fontWeight: FontWeight.w600,
-                      fontSize: 16,
+                    onPressed: () {
+                      // Başla butonuna tıklanınca yapılacaklar
+                    },
+                    child: const Text(
+                      'Hadi Başlayalım!',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontFamily: 'Nunito Sans',
+                        fontWeight: FontWeight.w600,
+                        fontSize: 16,
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
           ],
         ),
       ),

@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:triva/src/modules/home/screens/login_screen.dart';
 import 'package:triva/src/modules/home/screens/register_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:triva/src/utils/navigation/app_router.dart';
 
 @RoutePage()
 class HomeScreen extends StatelessWidget {
@@ -71,7 +72,7 @@ class _RegisterButton extends StatelessWidget {
           elevation: 0,
         ),
         onPressed: () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) => const RegisterScreen()));
+          context.router.push(const RegisterRoute());
         },
         child: const Text(
           'Kayıt Ol',

@@ -1,6 +1,9 @@
 import 'package:triva/src/modules/home/screens/verify_otp_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:auto_route/auto_route.dart';
+import 'package:triva/src/utils/navigation/app_router.dart';
 
+@RoutePage()
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
 
@@ -85,10 +88,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           ),
                           elevation: 0,
                         ),
-                        onPressed: () {Navigator.push(
-  context,
-  MaterialPageRoute(builder: (context) => const VerifyOtpScreen()),
-);},
+                        onPressed: () {
+
+                                    context.router.push(const VerifyOtpRoute());
+
+                        },
                         child: const Text(
                           'Şimdi Kayıt Ol',
                           style: TextStyle(

@@ -1,32 +1,44 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:triva/src/modules/home/screens/home_screen.dart';
-import 'package:triva/src/utils/navigation/guards/auth_guard.dart';
+import 'package:triva/src/modules/home/screens/onboarding_screen.dart';
+import 'package:triva/src/modules/home/screens/verify_otp_screen.dart';
+import 'package:triva/src/modules/home/screens/login_screen.dart';
+import 'package:triva/src/modules/home/screens/register_screen.dart';
 part 'app_router.gr.dart';
 
 @AutoRouterConfig(replaceInRouteName: 'Screen,Route')
-class AppRouter extends _$AppRouter {
-  AppRouter({super.navigatorKey, required this.authGuard});
+final class AppRouter extends RootStackRouter {
+  @override
+  RouteType get defaultRouteType => const RouteType.adaptive();
 
-  final AuthGuard authGuard;
   @override
   final List<AutoRoute> routes = [
-    AutoRoute(
+    CustomRoute(
       page: HomeRoute.page,
       initial: true,
+      transitionsBuilder: TransitionsBuilders.fadeIn,
     ),
+    CustomRoute(
+      page: OnboardingRoute.page,
+      path: '/onboarding',
+      transitionsBuilder: TransitionsBuilders.slideLeftWithFade,
+    ),
+    CustomRoute(
+      page: RegisterRoute.page,
+            path: '/register',
 
-    //other screens
+      transitionsBuilder: TransitionsBuilders.slideRightWithFade,
+    ),
+    CustomRoute(
+      page: VerifyOtpRoute.page,
+      path: '/verify-otp',
+      transitionsBuilder: TransitionsBuilders.fadeIn,
+    ),
+    CustomRoute(
+      page: LoginRoute.page,
+      path: '/login',
+      transitionsBuilder: TransitionsBuilders.slideLeftWithFade,
+    ),
   ];
 }
 
-extension StackRouterExtension on StackRouter {
-  Future setRoot(PageRouteInfo route) {
-    return pushAndPopUntil(route, predicate: (route) => false);
-  }
-}
-
-extension AppRouterExtension on AppRouter {
-  Future setRoot(PageRouteInfo route) {
-    return pushAndPopUntil(route, predicate: (route) => false);
-  }
-}

@@ -1,6 +1,9 @@
 import 'package:triva/src/modules/home/screens/onboarding_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:auto_route/auto_route.dart';
+import 'package:triva/src/utils/navigation/app_router.dart';
 
+@RoutePage()
 class VerifyOtpScreen extends StatefulWidget {
   const VerifyOtpScreen({super.key});
 
@@ -181,10 +184,10 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
                             ),
                             side: const BorderSide(color: Colors.transparent),
                           ),
-                          onPressed: () {Navigator.push(
-  context,
-  MaterialPageRoute(builder: (context) =>  const OnboardingScreen()),
-);},
+                          onPressed: () {
+                                      context.router.push(const OnboardingRoute());
+
+},
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
