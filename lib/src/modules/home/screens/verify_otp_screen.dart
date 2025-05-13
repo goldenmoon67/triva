@@ -183,7 +183,7 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
                           ),
                           onPressed: () {Navigator.push(
   context,
-  MaterialPageRoute(builder: (context) =>  OnboardingScreen()),
+  MaterialPageRoute(builder: (context) =>  const OnboardingScreen()),
 );},
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
