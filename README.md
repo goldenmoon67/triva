@@ -1,4 +1,4 @@
-# default_flutter_project
+# Triva Mobile App
 
 A new Flutter project.
 
