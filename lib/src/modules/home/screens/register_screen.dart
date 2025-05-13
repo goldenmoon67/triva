@@ -1,3 +1,4 @@
+import 'package:default_flutter_project/src/modules/home/screens/verify_otp_screen.dart';
 import 'package:flutter/material.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -84,7 +85,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           ),
                           elevation: 0,
                         ),
-                        onPressed: () {},
+                        onPressed: () {Navigator.push(
+  context,
+  MaterialPageRoute(builder: (context) => const VerifyOtpScreen()),
+);},
                         child: const Text(
                           'Şimdi Kayıt Ol',
                           style: TextStyle(
