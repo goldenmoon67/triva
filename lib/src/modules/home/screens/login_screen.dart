@@ -56,7 +56,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const SizedBox(height: 100),
+                    const SizedBox(height: 200),
                     // Giriş Yap başlık
                     const Text(
                       'Giriş Yap',

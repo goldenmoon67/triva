@@ -22,13 +22,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
           const Positioned(
             top: -100,
             left: -80,
-            child: _Bubble(color: Color(0xFFF2F5FE), size: 200),
+            child: _Bubble(color: Color(0xFFF2F5FE), size: 400),
           ),
           // Sağ üst büyük mavi baloncuk
           const Positioned(
             top: 0,
             right: -60,
-            child: _Bubble(color: Color(0xFF004BFE), size: 140),
+            child: _Bubble(color: Color(0xFF004BFE), size: 180),
           ),
           // Ana içerik
           SafeArea(
@@ -40,16 +40,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   children: [
                     const SizedBox(height: 60),
                     // Siyah bar (placeholder)
-                    Center(
-                      child: Container(
-                        width: 60,
-                        height: 6,
-                        decoration: BoxDecoration(
-                          color: Colors.black,
-                          borderRadius: BorderRadius.circular(34),
-                        ),
-                      ),
-                    ),
+                    
                     const SizedBox(height: 32),
                     // Başlık
                     const Text(

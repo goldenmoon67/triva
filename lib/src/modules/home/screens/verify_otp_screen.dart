@@ -47,10 +47,32 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
           // Sol üst büyük mavi daire
           Positioned(
             top: -120,
-            left: -120,
+            left: -300,
+            child: Container(
+              width: 800,
+              height: 350,
+              decoration: const BoxDecoration(
+                color: Color(0xFF004BFE),
+                shape: BoxShape.circle,
+              ),
+            ),
+          ),   Positioned(
+            top: -100,
+            right: -80,
             child: Container(
               width: 300,
               height: 300,
+              decoration: const BoxDecoration(
+                color: Color(0xFFF2F5FE),
+                shape: BoxShape.circle,
+              ),
+            ),
+          ), Positioned(
+            bottom: -120,
+            left: -100,
+            child: Container(
+              width: 200,
+              height: 350,
               decoration: const BoxDecoration(
                 color: Color(0xFF004BFE),
                 shape: BoxShape.circle,
