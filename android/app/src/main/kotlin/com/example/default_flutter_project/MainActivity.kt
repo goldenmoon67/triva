@@ -1,4 +1,4 @@
-package com.example.default_flutter_project
+package com.triva.app
 
 import io.flutter.embedding.android.FlutterActivity
 

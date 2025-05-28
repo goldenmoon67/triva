@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "956925446872",
+    "project_id": "triva-66175",
+    "storage_bucket": "triva-66175.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:956925446872:android:0aea2a847a1b54fd45e5ad",
+        "android_client_info": {
+          "package_name": "com.triva.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyATyClfz1LoMdTvgn6FHXDhOte28lyY0iE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

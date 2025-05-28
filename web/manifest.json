@@ -1,6 +1,6 @@
 {
-    "name": "default_flutter_project",
-    "short_name": "default_flutter_project",
+    "name": "triva",
+    "short_name": "triva",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

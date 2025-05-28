@@ -1,0 +1,8 @@
+/* 
+  InfoPlist.strings
+  Runner
+
+  Created by Alkan Ataş on 30.09.2024.
+  
+*/
+"NSMicrophoneUsageDescription" = "triva requires this permission to enhance the app experience and enable you to use features that require a microphone.";

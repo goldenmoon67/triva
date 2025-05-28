@@ -1,12 +1,33 @@
+import 'dart:developer' as developer;
 import 'package:triva/src/configs/flavors.dart';
 import 'package:triva/src/utils/di/getit_register.dart';
 import 'package:triva/src/utils/navigation/app_router.dart';
 import 'package:flutter/material.dart';
 import 'package:overlay_support/overlay_support.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
+import 'package:triva/src/services/firebase_service.dart';
 
 Future<void> main() async {
   F.appFlavor = Flavor.dev;
   WidgetsFlutterBinding.ensureInitialized();
+  
+  try {
+    // Initialize Firebase
+    developer.log('Firebase başlatılıyor...', name: 'main');
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+    developer.log('Firebase başarıyla başlatıldı', name: 'main');
+    
+    // Firebase bağlantı durumunu logla
+    final firebaseService = FirebaseService();
+    firebaseService.logFirebaseStatus();
+    
+  } catch (e) {
+    developer.log('Firebase başlatma hatası: $e', name: 'main', error: e);
+  }
+  
   await setupGetIt();
   runApp(const MyApp());
 }
@@ -23,8 +44,14 @@ class _MyAppState extends State<MyApp> {
 
   @override
   void initState() {
-    // initilaze
     super.initState();
+    
+    // Firebase bağlantı durumunu tekrar kontrol et
+    final firebaseService = FirebaseService();
+    firebaseService.checkFirebaseConnection().then((success) {
+      developer.log('MyApp initState - Firebase bağlantı durumu: ${success ? "Bağlı" : "Bağlı değil"}', 
+        name: 'MyApp');
+    });
   }
 
   @override
