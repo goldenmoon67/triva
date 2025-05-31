@@ -4,6 +4,8 @@ import 'package:triva/src/modules/home/screens/onboarding_screen.dart';
 import 'package:triva/src/modules/home/screens/verify_otp_screen.dart';
 import 'package:triva/src/modules/home/screens/login_screen.dart';
 import 'package:triva/src/modules/home/screens/register_screen.dart';
+import 'package:triva/src/modules/home/screens/dashboard_screen.dart';
+import 'package:triva/src/modules/home/screens/splash_screen.dart';
 part 'app_router.gr.dart';
 
 @AutoRouterConfig(replaceInRouteName: 'Screen,Route')
@@ -14,8 +16,14 @@ final class AppRouter extends RootStackRouter {
   @override
   final List<AutoRoute> routes = [
     CustomRoute(
-      page: HomeRoute.page,
+      page: SplashRoute.page,
+      path: '/splash',
       initial: true,
+      transitionsBuilder: TransitionsBuilders.fadeIn,
+    ),
+    CustomRoute(
+      page: HomeRoute.page,
+      path: '/home',
       transitionsBuilder: TransitionsBuilders.fadeIn,
     ),
     CustomRoute(
@@ -38,6 +46,11 @@ final class AppRouter extends RootStackRouter {
       page: LoginRoute.page,
       path: '/login',
       transitionsBuilder: TransitionsBuilders.slideLeftWithFade,
+    ),
+    CustomRoute(
+      page: DashboardRoute.page,
+      path: '/dashboard',
+      transitionsBuilder: TransitionsBuilders.fadeIn,
     ),
   ];
 }

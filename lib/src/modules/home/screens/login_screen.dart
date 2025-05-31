@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:triva/src/services/firebase_service.dart';
+import 'package:triva/src/utils/logger/app_logger.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:triva/src/utils/navigation/app_router.dart';
+import 'package:triva/src/services/user_cache_service.dart';
+import 'package:triva/src/modules/home/screens/dashboard_screen.dart';
 
 @RoutePage()
 class LoginScreen extends StatefulWidget {
@@ -11,6 +17,137 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   bool _obscureText = true;
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+  final _firebaseService = FirebaseService();
+  bool _isLoading = false;
+  String? _errorMessage;
+  
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+  
+  Future<void> _login() async {
+    // Validate inputs
+    if (_emailController.text.trim().isEmpty) {
+      setState(() {
+        _errorMessage = 'Lütfen e-posta adresinizi girin';
+      });
+      return;
+    }
+    
+    if (_passwordController.text.trim().isEmpty) {
+      setState(() {
+        _errorMessage = 'Lütfen şifrenizi girin';
+      });
+      return;
+    }
+    
+    setState(() {
+      _isLoading = true;
+      _errorMessage = null;
+    });
+
+    try {
+      AppLogger.log('LoginScreen', 'Giriş denemesi: ${_emailController.text.trim()}');
+      
+      // Kullanıcı girişi
+      final userCredential = await _firebaseService.signInWithEmailAndPassword(
+        email: _emailController.text.trim(),
+        password: _passwordController.text.trim(),
+      );
+      
+      // Kullanıcı bilgilerini önbelleğe kaydet
+      if (userCredential.user != null) {
+        await UserCacheService.saveUserLoginInfo(
+          userId: userCredential.user!.uid,
+          email: userCredential.user!.email,
+          displayName: userCredential.user!.displayName,
+        );
+        AppLogger.log('LoginScreen', 'Kullanıcı bilgileri önbelleğe kaydedildi: ${userCredential.user!.uid}');
+      }
+      
+      AppLogger.log('LoginScreen', 'Giriş başarılı');
+      
+      if (mounted) {
+        // Başarılı giriş sonrası ana sayfaya yönlendir
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Giriş başarılı!')),
+        );
+        
+        // Dashboard sayfasına yönlendir
+        try {
+          // Önce AutoRoute ile deneyelim
+          context.router.replace(const DashboardRoute());
+          AppLogger.log('LoginScreen', 'Dashboard sayfasına yönlendirildi (AutoRoute)');
+        } catch (autoRouteError) {
+          AppLogger.error('AutoRoute yönlendirme hatası', error: autoRouteError);
+          
+          // AutoRoute başarısız olursa doğrudan Navigator kullan
+          try {
+            Navigator.of(context).pushReplacement(
+              MaterialPageRoute(builder: (context) => const DashboardScreen()),
+            );
+            AppLogger.log('LoginScreen', 'Dashboard sayfasına yönlendirildi (Navigator)');
+          } catch (navigationError) {
+            AppLogger.error('Navigator yönlendirme hatası', error: navigationError);
+            
+            // Son çare olarak HomeScreen'e git
+            try {
+              context.router.replace(const HomeRoute());
+              AppLogger.log('LoginScreen', 'Ana sayfaya yönlendirildi (alternatif)');
+            } catch (e) {
+              AppLogger.error('Alternatif yönlendirme hatası', error: e);
+            }
+          }
+        }
+      }
+    } catch (e) {
+      AppLogger.error('Giriş hatası', error: e);
+      setState(() {
+        _errorMessage = _getFirebaseErrorMessage(e);
+      });
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    }
+  }
+
+  String _getFirebaseErrorMessage(dynamic error) {
+    AppLogger.log('LoginScreen', 'Hata mesajı oluşturuluyor: ${error.runtimeType}');
+    if (error is FirebaseAuthException) {
+      AppLogger.log('LoginScreen', 'FirebaseAuthException kodu: ${error.code}');
+      switch (error.code) {
+        case 'user-not-found':
+          return 'Bu e-posta ile kayıtlı bir kullanıcı bulunamadı.';
+        case 'wrong-password':
+          return 'Yanlış şifre girdiniz.';
+        case 'invalid-email':
+          return 'Geçersiz e-posta adresi.';
+        case 'user-disabled':
+          return 'Bu kullanıcı hesabı devre dışı bırakılmış.';
+        case 'network-request-failed':
+          return 'İnternet bağlantınızı kontrol edin. (Firebase)';
+        case 'too-many-requests':
+          return 'Çok fazla deneme yapıldı. Lütfen daha sonra tekrar deneyin.';
+        case 'email-already-in-use': // Bu normalde kayıt için ama yine de ekleyelim
+            return 'Bu e-posta adresi zaten kullanımda.';
+        // Diğer Firebase Auth hata kodları eklenebilir
+        default:
+          return error.message ?? 'Bir Firebase kimlik doğrulama hatası oluştu.';
+      }
+    } else if (error.toString().toLowerCase().contains('network') || error.toString().toLowerCase().contains('socketexception')) {
+      return 'İnternet bağlantınızı kontrol edin.';
+    }
+    AppLogger.error('Bilinmeyen giriş hatası tipi', error: error, stackTrace: StackTrace.current);
+    return 'Giriş sırasında beklenmedik bir hata oluştu. Lütfen tekrar deneyin.';
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -101,8 +238,10 @@ class _LoginScreenState extends State<LoginScreen> {
                         borderRadius: BorderRadius.circular(59),
                       ),
                       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
-                      child: const TextField(
-                        decoration: InputDecoration(
+                      child: TextField(
+                        controller: _emailController,
+                        keyboardType: TextInputType.emailAddress,
+                        decoration: const InputDecoration(
                           border: InputBorder.none,
                           hintText: 'Email',
                           hintStyle: TextStyle(
@@ -127,6 +266,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         children: [
                           Expanded(
                             child: TextField(
+                              controller: _passwordController,
                               obscureText: _obscureText,
                               decoration: const InputDecoration(
                                 border: InputBorder.none,
@@ -154,6 +294,16 @@ class _LoginScreenState extends State<LoginScreen> {
                         ],
                       ),
                     ),
+                    // Error message
+                    if (_errorMessage != null)
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 16.0),
+                        child: Text(
+                          _errorMessage!,
+                          style: const TextStyle(color: Colors.red),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
                     const SizedBox(height: 32),
                     // Giriş Yap butonu
                     SizedBox(
@@ -167,16 +317,18 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                           elevation: 0,
                         ),
-                        onPressed: () {},
-                        child: const Text(
-                          'Giriş Yap',
-                          style: TextStyle(
-                            fontFamily: 'Nunito Sans',
-                            fontWeight: FontWeight.w300,
-                            fontSize: 22,
-                            color: Color(0xFFF3F3F3),
+                        onPressed: _isLoading ? null : _login,
+                        child: _isLoading
+                          ? const CircularProgressIndicator(color: Colors.white)
+                          : const Text(
+                            'Giriş Yap',
+                            style: TextStyle(
+                              fontFamily: 'Nunito Sans',
+                              fontWeight: FontWeight.w300,
+                              fontSize: 22,
+                              color: Color(0xFFF3F3F3),
+                            ),
                           ),
-                        ),
                       ),
                     ),
                     const SizedBox(height: 32),

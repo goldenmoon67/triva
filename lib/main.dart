@@ -1,12 +1,16 @@
-import 'dart:developer' as developer;
 import 'package:triva/src/configs/flavors.dart';
 import 'package:triva/src/utils/di/getit_register.dart';
 import 'package:triva/src/utils/navigation/app_router.dart';
 import 'package:flutter/material.dart';
 import 'package:overlay_support/overlay_support.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'firebase_options.dart';
 import 'package:triva/src/services/firebase_service.dart';
+import 'package:triva/src/services/firebase_debug_service.dart';
+import 'package:triva/src/utils/logger/app_logger.dart';
+import 'package:triva/src/utils/network/firebase_network_logger.dart';
 
 Future<void> main() async {
   F.appFlavor = Flavor.dev;
@@ -14,18 +18,28 @@ Future<void> main() async {
   
   try {
     // Initialize Firebase
-    developer.log('Firebase başlatılıyor...', name: 'main');
+    AppLogger.firebase('Firebase başlatılıyor...');
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
     );
-    developer.log('Firebase başarıyla başlatıldı', name: 'main');
+    AppLogger.firebase('Firebase başarıyla başlatıldı');
     
-    // Firebase bağlantı durumunu logla
+    // Firebase Network Logger'ı başlat
+    FirebaseNetworkLogger().initialize();
+    AppLogger.firebase('Firebase Network Logger başlatıldı');
+    
+    // Firebase servisini başlat ve durumunu logla
     final firebaseService = FirebaseService();
     firebaseService.logFirebaseStatus();
     
+    // Firebase Auth konfigürasyonunu logla
+    AppLogger.firebase('Firebase Auth konfigürasyonu:');
+    AppLogger.firebase('- Auth instance: ${FirebaseAuth.instance.runtimeType}');
+    AppLogger.firebase('- Tenant ID: ${FirebaseAuth.instance.tenantId}');
+    AppLogger.firebase('- Language Code: ${FirebaseAuth.instance.languageCode}');
+    
   } catch (e) {
-    developer.log('Firebase başlatma hatası: $e', name: 'main', error: e);
+    AppLogger.error('Firebase başlatma hatası', error: e);
   }
   
   await setupGetIt();
@@ -49,8 +63,7 @@ class _MyAppState extends State<MyApp> {
     // Firebase bağlantı durumunu tekrar kontrol et
     final firebaseService = FirebaseService();
     firebaseService.checkFirebaseConnection().then((success) {
-      developer.log('MyApp initState - Firebase bağlantı durumu: ${success ? "Bağlı" : "Bağlı değil"}', 
-        name: 'MyApp');
+      AppLogger.firebase('MyApp initState - Firebase bağlantı durumu: ${success ? "Bağlı" : "Bağlı değil"}');
     });
   }
 
